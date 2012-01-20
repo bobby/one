@@ -10,16 +10,16 @@
                         0
                         5000))
 
-(defn- success?
+(defn success?
   [{status :status}]
   (and (>= status 200)
        (<  status 300)))
 
-(defn- redirect?
+(defn redirect?
   [{status :status}]
   (boolean (#{301 302 303 307} status)))
 
-(defn- error?
+(defn error?
   [{status :status}]
   (>= status 400))
 
@@ -57,8 +57,6 @@
            content
            (.strobj headers)
            priority
-           ;; This next one is a callback, and we could use it to get
-           ;; rid of the atom and figure out success/failure ourselves
            (partial handle-response on-success on-error)
            retries)
     (catch js/Error e
